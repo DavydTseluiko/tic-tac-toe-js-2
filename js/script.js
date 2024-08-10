@@ -4,3 +4,6 @@ const gameBoard = (function () {
   return { board };
 })();
 
+const player = function(name, mark) {
+  return {name, mark}
+}
