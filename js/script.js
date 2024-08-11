@@ -11,4 +11,7 @@ const player = function (name, mark) {
 const game = (function () {
   const firstPlayer = player("David", "X");
   const secondPlayer = player("Bot", "O");
+
+  const firstToGo = firstPlayer.mark === "X" ? firstPlayer : secondPlayer;
+  const secondToGo = firstPlayer.mark === "X" ? secondPlayer : firstPlayer;
 })();
