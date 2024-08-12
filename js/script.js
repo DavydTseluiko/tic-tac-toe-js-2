@@ -1,6 +1,6 @@
 const gameBoard = (function () {
   const board = new Array(9).fill("-");
-  // const board = ["X", "O", "X", "X", "X", "X", 7, 8, "O"];
+  // const board = ["X", "O", "O", "X", "O", "X", "X", "O", "O"];
 
   return { board };
 })();
@@ -83,18 +83,50 @@ const game = (function () {
       if (streakCount[0] === 3) {
         console.log(`${firstPlayer.name} won the game!`);
         ifWon = true;
+        return true;
       } else if (streakCount[1] === 3) {
         console.log(`${secondPlayer.name} won the game!`);
         ifWon = true;
+        return true;
       }
       streakCount = [0, 0];
       start += 3;
       end += 3;
     }
   }
+  function verticalWin() {
+    let start = 0;
+    let end = 7;
+
+    let streakCount = [0, 0];
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = start; j < end; j += 3) {
+        if (gameBoard.board[j] === firstPlayer.mark) {
+          streakCount[0] += 1;
+        } else if (gameBoard.board[j] === secondPlayer.mark) {
+          streakCount[1] += 1;
+        }
+      }
+      if (streakCount[0] === 3) {
+        console.log(`${firstPlayer.name} won the game!`);
+        ifWon = true;
+        return true;
+      } else if (streakCount[1] === 3) {
+        console.log(`${secondPlayer.name} won the game!`);
+        ifWon = true;
+        return true;
+      }
+
+      streakCount = [0, 0];
+      start++;
+      end++;
+    }
+  }
 
   function checkRules() {
     horizontalWin();
+    verticalWin();
   }
 
   function playGame() {
