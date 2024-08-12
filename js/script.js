@@ -1,6 +1,5 @@
 const gameBoard = (function () {
   const board = new Array(9).fill("-");
-  // const board = ["X", "O", "O", "X", "O", "X", "X", "O", "O"];
 
   return { board };
 })();
@@ -123,10 +122,41 @@ const game = (function () {
       end++;
     }
   }
+  function diagonalWin() {
+    let streakCountLeftSide = [0, 0];
+    let streakCountRightSide = [0, 0];
+
+    for (let i = 0; i < 9; i += 4) {
+      if (gameBoard.board[i] === firstPlayer.mark) {
+        streakCountLeftSide[0] += 1;
+      } else if (gameBoard.board[i] === secondPlayer.mark) {
+        streakCountLeftSide[1] += 1;
+      }
+    }
+
+    for (let i = 2; i < 7; i += 2) {
+      if (gameBoard.board[i] === firstPlayer.mark) {
+        streakCountRightSide[0] += 1;
+      } else if (gameBoard.board[i] === secondPlayer.mark) {
+        streakCountRightSide[1] += 1;
+      }
+    }
+
+    if (streakCountLeftSide[0] === 3 || streakCountRightSide[0] === 3) {
+      console.log(`${firstPlayer.name} won the game!`);
+      ifWon = true;
+      return true;
+    } else if (streakCountLeftSide[1] === 3 || streakCountRightSide[1] === 3) {
+      console.log(`${secondPlayer.name} won the game!`);
+      ifWon = true;
+      return true;
+    }
+  }
 
   function checkRules() {
     horizontalWin();
     verticalWin();
+    diagonalWin();
   }
 
   function playGame() {
@@ -140,5 +170,4 @@ const game = (function () {
   }
 
   playGame();
-  // checkRules();
 })();
